@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizza Place – Tirana</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c0392b;
+    --red-dark: #922b21;
+    --gold: #d4a017;
+    --black: #0d0d0d;
+    --charcoal: #1a1a1a;
+    --card: #1f1f1f;
+    --text: #f0ece4;
+    --muted: #a89e8e;
+    --border: rgba(212,160,23,0.25);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--text); font-family: 'Montserrat', sans-serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,13,13,0.95); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 64px;
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold); letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { background: var(--red); color: #fff; padding: 0.5rem 1.2rem; border-radius: 2px; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; font-weight: 600; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--red-dark); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #1a0000 0%, #0d0d0d 40%, #0d0d0d 70%, #100a00 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 8rem 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(192,57,43,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-halal {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid var(--gold); color: var(--gold); padding: 0.3rem 1rem;
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    border-radius: 50px; margin-bottom: 2rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700; line-height: 1.1; margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff 30%, var(--gold) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-sub { font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--red); font-style: italic; font-family: 'Playfair Display', serif; margin-bottom: 1.5rem; }
+  .hero-desc { color: var(--muted); max-width: 480px; margin: 0 auto 2.5rem; font-size: 0.95rem; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn-primary { background: var(--red); color: #fff; padding: 0.9rem 2rem; border-radius: 2px; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; font-weight: 700; transition: background 0.2s, transform 0.2s; }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+  .btn-outline { border: 1px solid var(--border); color: var(--gold); padding: 0.9rem 2rem; border-radius: 2px; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; font-weight: 600; transition: border-color 0.2s; }
+  .btn-outline:hover { border-color: var(--gold); }
+  .hero-stats { display: flex; gap: 3rem; margin-top: 4rem; flex-wrap: wrap; justify-content: center; }
+  .hero-stat { text-align: center; }
+  .hero-stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); font-weight: 700; }
+  .hero-stat-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+  .offer-banner {
+    background: linear-gradient(90deg, var(--red-dark), var(--red));
+    text-align: center; padding: 0.75rem 1rem;
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .offer-banner span { color: rgba(255,255,255,0.85); }
+  .offer-banner strong { color: #fff; }
+
+  /* SECTION */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; margin-bottom: 1rem; }
+  .section-title em { color: var(--gold); font-style: italic; }
+  .divider { width: 60px; height: 2px; background: var(--red); margin: 0 auto 3rem; }
+  .divider-left { margin-left: 0; }
+
+  /* MENU TABS */
+  .menu-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .tab-btn {
+    background: transparent; border: 1px solid var(--border); color: var(--muted);
+    padding: 0.5rem 1.2rem; border-radius: 2px; cursor: pointer;
+    font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 1px;
+    text-transform: uppercase; transition: all 0.2s;
+  }
+  .tab-btn.active, .tab-btn:hover { background: var(--red); border-color: var(--red); color: #fff; }
+  .menu-section { display: none; }
+  .menu-section.active { display: block; }
+
+  /* PIZZA GRID */
+  .pizza-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5px; }
+  .pizza-card {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 1.5rem; transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+  }
+  .pizza-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .pizza-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+  .pizza-name { font-weight: 600; font-size: 1rem; color: #fff; }
+  .pizza-price { color: var(--gold); font-weight: 700; font-size: 0.95rem; white-space: nowrap; margin-left: 1rem; }
+  .pizza-ingredients { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+  .pizza-sizes { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+  .size-badge {
+    font-size: 0.65rem; letter-spacing: 1px; border: 1px solid var(--border);
+    padding: 0.15rem 0.4rem; color: var(--muted); border-radius: 2px;
+  }
+
+  /* INFO CARDS */
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1px; }
+  .info-card { background: var(--card); padding: 2rem; border: 1px solid var(--border); text-align: center; }
+  .info-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .info-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold); margin-bottom: 0.5rem; }
+  .info-card p { font-size: 0.85rem; color: var(--muted); }
+  .info-card a { color: var(--text); text-decoration: none; }
+  .info-card a:hover { color: var(--gold); }
+
+  /* FOOTER */
+  footer { background: #080808; border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+  footer .footer-logo { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); margin-bottom: 0.5rem; }
+  footer p { color: var(--muted); font-size: 0.8rem; }
+  footer .social-links { display: flex; gap: 1.5rem; justify-content: center; margin: 1.5rem 0; }
+  footer .social-links a { color: var(--muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
+  footer .social-links a:hover { color: var(--gold); }
+
+  /* MAP SECTION */
+  .map-container { border: 1px solid var(--border); overflow: hidden; border-radius: 2px; }
+  .map-inner { background: var(--card); height: 300px; display: flex; align-items: center; justify-content: center; position: relative; }
+  .map-pin { text-align: center; }
+  .map-pin-icon { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  .map-link { display: inline-block; margin-top: 1rem; background: var(--red); color: #fff; padding: 0.6rem 1.5rem; border-radius: 2px; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; font-weight: 600; }
+
+  /* CONTACT */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  @media (max-width: 700px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    nav .nav-links { display: none; }
+    .hero-stats { gap: 1.5rem; }
+  }
+  .contact-item { margin-bottom: 1.5rem; }
+  .contact-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--red); margin-bottom: 0.25rem; }
+  .contact-value { font-size: 1rem; color: var(--text); }
+  .contact-value a { color: var(--gold); text-decoration: none; }
+
+  /* CREPES TABLE */
+  .crepes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
+  @media (max-width: 600px) { .crepes-grid { grid-template-columns: 1fr; } }
+
+  /* DRINKS */
+  .drinks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1px; }
+  .drink-card { background: var(--card); border: 1px solid var(--border); padding: 1rem; text-align: center; }
+  .drink-name { font-size: 0.85rem; font-weight: 600; color: #fff; margin-bottom: 0.25rem; }
+  .drink-price { font-size: 0.8rem; color: var(--gold); font-weight: 700; }
+
+  /* SALADS SANDWICHES */
+  .list-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5px; }
+
+  .animate-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .animate-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* WHATSAPP FLOAT */
+  .wa-float {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    background: #25D366; color: #fff;
+    width: 60px; height: 60px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    text-decoration: none; font-size: 1.8rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: waPulse 2.5s infinite;
+  }
+  .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+  @keyframes waPulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 4px 32px rgba(37,211,102,0.7); }
+  }
+  .wa-tooltip {
+    position: fixed; bottom: 2.4rem; right: 5.5rem; z-index: 999;
+    background: #111; color: #fff; padding: 0.4rem 0.9rem;
+    border-radius: 6px; font-size: 0.75rem; white-space: nowrap;
+    border: 1px solid #25D366; pointer-events: none;
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .wa-float:hover ~ .wa-tooltip { opacity: 1; }
+
+  /* CONTACT FORM SECTION */
+  .contact-section { background: #0a0a0a; padding: 5rem 2rem; }
+  .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1000px; margin: 0 auto; }
+  @media(max-width:700px){ .contact-wrap { grid-template-columns: 1fr; gap: 2rem; } }
+  .contact-info-block { }
+  .contact-info-item { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 2rem; }
+  .ci-icon { width: 44px; height: 44px; border-radius: 50%; background: rgba(192,57,43,0.15); border: 1px solid rgba(192,57,43,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+  .ci-label { font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); margin-bottom: 0.2rem; }
+  .ci-value { font-size: 0.95rem; color: var(--text); }
+  .ci-value a { color: var(--text); text-decoration: none; transition: color 0.2s; }
+  .ci-value a:hover { color: var(--gold); }
+
+  .wa-big-btn {
+    display: flex; align-items: center; gap: 0.75rem; justify-content: center;
+    background: #25D366; color: #fff; padding: 1rem 1.5rem;
+    border-radius: 4px; font-size: 0.9rem; font-weight: 700;
+    text-decoration: none; letter-spacing: 0.5px;
+    transition: background 0.2s, transform 0.2s;
+    margin-top: 1rem;
+  }
+  .wa-big-btn:hover { background: #1da851; transform: translateY(-2px); }
+
+  /* FORM */
+  .order-form { background: var(--card); border: 1px solid var(--border); padding: 2rem; border-radius: 4px; }
+  .order-form h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); margin-bottom: 0.25rem; }
+  .order-form p { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; background: #111; border: 1px solid var(--border);
+    color: var(--text); padding: 0.7rem 1rem; border-radius: 2px;
+    font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--gold); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-group select option { background: #111; }
+  .send-wa-btn {
+    width: 100%; background: #25D366; color: #fff; border: none;
+    padding: 0.9rem; border-radius: 2px; font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+    font-family: 'Montserrat', sans-serif; transition: background 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  }
+  .send-wa-btn:hover { background: #1da851; }
+</style>
+</head>
+<body>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/355685555517" target="_blank" class="wa-float" title="Na shkruani në WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.117 1.532 5.845L.057 23.633a.5.5 0 0 0 .61.61l5.788-1.475A11.952 11.952 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.659-.528-5.165-1.441l-.371-.221-3.836.977.997-3.747-.242-.385A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+</a>
+<div class="wa-tooltip">Porosit në WhatsApp</div>
+
+<div class="offer-banner">
+  <strong>🎉 Oferta 2025:</strong> <span>Për çdo picë normale — Coca Cola Falas!</span>
+</div>
+
+<nav>
+  <div class="nav-logo">Pizza Place</div>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#info">Info</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+  <a href="tel:+355685555517" class="nav-cta">📞 Porosit</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-halal">✦ Halal 100% ✦</div>
+  <h1>Pizza Place</h1>
+  <p class="hero-sub">Autentike · Tirana</p>
+  <p class="hero-desc">Picë e freskët, krepe delikate, sanduiçe të pasura dhe salata të shijshme — gatuar me dashuri çdo ditë.</p>
+  <div class="hero-actions">
+    <a href="#menu" class="btn-primary">Shiko Menunë</a>
+    <a href="tel:+355685555517" class="btn-outline">Porosit Tani</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">10:00</div>
+      <div class="hero-stat-label">Hapur nga</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">24:00</div>
+      <div class="hero-stat-label">Mbyllet</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">Delivery</div>
+      <div class="hero-stat-label">Dërgesë në shtëpi</div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu" style="background: #111; padding-top: 5rem; padding-bottom: 5rem;">
+  <div class="container">
+    <div class="section-label">Menuja jonë</div>
+    <h2 class="section-title"><em>Çfarë</em> ofrojmë</h2>
+    <div class="divider divider-left"></div>
+
+    <div class="menu-tabs">
+      <button class="tab-btn active" onclick="showTab('pizza')">🍕 Picë</button>
+      <button class="tab-btn" onclick="showTab('penerli')">🫓 Penerli</button>
+      <button class="tab-btn" onclick="showTab('sandwic')">🥪 Sandwiches</button>
+      <button class="tab-btn" onclick="showTab('salata')">🥗 Salata</button>
+      <button class="tab-btn" onclick="showTab('krepe')">🥞 Krepe</button>
+      <button class="tab-btn" onclick="showTab('drinks')">🥤 Pije</button>
+    </div>
+
+    <!-- PIZZA -->
+    <div class="menu-section active" id="tab-pizza">
+      <p style="color:var(--muted);font-size:0.8rem;margin-bottom:1.5rem;">S = Small &nbsp;·&nbsp; M = Medium &nbsp;·&nbsp; L = Large</p>
+      <div class="pizza-grid">
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Margarita</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella</div>
+          <div class="pizza-sizes"><span class="size-badge">S 250L</span><span class="size-badge">M 400L</span><span class="size-badge">L 700L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Sallam</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Sallam</div>
+          <div class="pizza-sizes"><span class="size-badge">S 300L</span><span class="size-badge">M 450L</span><span class="size-badge">L 750L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Proshutë</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Proshutë</div>
+          <div class="pizza-sizes"><span class="size-badge">S 350L</span><span class="size-badge">M 500L</span><span class="size-badge">L 800L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Proshutë Sallam</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Proshutë, Sallam</div>
+          <div class="pizza-sizes"><span class="size-badge">S 350L</span><span class="size-badge">M 500L</span><span class="size-badge">L 800L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Ton</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Ton</div>
+          <div class="pizza-sizes"><span class="size-badge">S 450L</span><span class="size-badge">M 600L</span><span class="size-badge">L 900L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Ton Kërpudhë</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Ton, Kërpudhë</div>
+          <div class="pizza-sizes"><span class="size-badge">S 500L</span><span class="size-badge">M 650L</span><span class="size-badge">L 950L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Vegjetariane</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Speca, Ullinj, Kërpudha</div>
+          <div class="pizza-sizes"><span class="size-badge">S 400L</span><span class="size-badge">M 550L</span><span class="size-badge">L 850L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">4 Djathrat</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Gouda, Gorgonzola, Grana</div>
+          <div class="pizza-sizes"><span class="size-badge">S 400L</span><span class="size-badge">M 550L</span><span class="size-badge">L 850L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Pikante</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Suxhuk</div>
+          <div class="pizza-sizes"><span class="size-badge">S 350L</span><span class="size-badge">M 500L</span><span class="size-badge">L 800L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Kapriqoza</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Sallam, Proshutë, Speca, Ullinj, Kërpudha</div>
+          <div class="pizza-sizes"><span class="size-badge">S 400L</span><span class="size-badge">M 550L</span><span class="size-badge">L 850L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">4 Stinët</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Sallam, Proshutë, Ton, Kërpudhë</div>
+          <div class="pizza-sizes"><span class="size-badge">S 400L</span><span class="size-badge">M 550L</span><span class="size-badge">L 850L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">La Crema</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Proshutë, Kërpudhë, Suxhuk, Pana</div>
+          <div class="pizza-sizes"><span class="size-badge">S 500L</span><span class="size-badge">M 650L</span><span class="size-badge">L 950L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Pulë Tartuf</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Pulë, Tartuf</div>
+          <div class="pizza-sizes"><span class="size-badge">S 500L</span><span class="size-badge">M 650L</span><span class="size-badge">L 950L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Kebab</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Qofte, Qepë</div>
+          <div class="pizza-sizes"><span class="size-badge">S 600L</span><span class="size-badge">M 750L</span><span class="size-badge">L 1050L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Rukola</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Proshutë, Rukola, Pomodorini, Grana</div>
+          <div class="pizza-sizes"><span class="size-badge">S 500L</span><span class="size-badge">M 650L</span><span class="size-badge">L 950L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">MIX</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Sallam, Proshutë, Kërpudhë, Suxhuk, Speca, Ullinj, Grana</div>
+          <div class="pizza-sizes"><span class="size-badge">S 600L</span><span class="size-badge">M 750L</span><span class="size-badge">L 1050L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Fruta Deti</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Karkaleca, Kallamar</div>
+          <div class="pizza-sizes"><span class="size-badge">S 600L</span><span class="size-badge">M 750L</span><span class="size-badge">L 1050L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Popay</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Spinaq, Vezë</div>
+          <div class="pizza-sizes"><span class="size-badge">S 550L</span><span class="size-badge">M 700L</span><span class="size-badge">L 1000L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Ananas</span></div>
+          <div class="pizza-ingredients">Salcë, Mozzarella, Fileto Pule, Djath i bardhë, Ananas</div>
+          <div class="pizza-sizes"><span class="size-badge">S 600L</span><span class="size-badge">M 750L</span><span class="size-badge">L 1050L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name">Bianca</span></div>
+          <div class="pizza-ingredients">Mozzarella, Djath i bardhë</div>
+          <div class="pizza-sizes"><span class="size-badge">S 300L</span><span class="size-badge">M 450L</span><span class="size-badge">L 750L</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PENERLI -->
+    <div class="menu-section" id="tab-penerli">
+      <div class="pizza-grid">
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Margarita</span><span class="pizza-price">200L</span></div><div class="pizza-ingredients">Salcë, Mozzarella</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Sallam</span><span class="pizza-price">250L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Sallam</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Proshutë</span><span class="pizza-price">300L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Proshutë</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Proshutë Sallam</span><span class="pizza-price">300L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Proshutë</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Proshutë Kërpudhë</span><span class="pizza-price">350L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Proshutë, Kërpudhë</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Ton</span><span class="pizza-price">400L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Ton</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Ton Kërpudhë</span><span class="pizza-price">450L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Proshutë, Kërpudhë</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Vegjetariane</span><span class="pizza-price">350L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Speca, Ullinj, Kërpudha</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">4 Djathrat</span><span class="pizza-price">350L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Gouda, Gorgonzola, Grana</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Pikante</span><span class="pizza-price">300L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Suxhuk</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Kapriqoza</span><span class="pizza-price">350L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Sallam, Proshutë, Speca, Ullinj, Kërpudha</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">4 Stinët</span><span class="pizza-price">350L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Sallam, Proshutë, Ton, Kërpudhë</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">La Crema</span><span class="pizza-price">450L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Proshutë, Kërpudhë, Suxhuk, Pana</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Pulë Tartuf</span><span class="pizza-price">450L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Pulë, Tartuf</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Kebab</span><span class="pizza-price">500L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Qofte, Qepë</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Rukola</span><span class="pizza-price">450L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Proshutë, Rukola, Pomodorini, Grana</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">MIX</span><span class="pizza-price">550L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Sallam, Proshutë, Suxhuk, Kërpudhë, Speca, Ullinj, Majonezë, Domate</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Fruta Deti</span><span class="pizza-price">550L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Karkaleca, Kallamar</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Popay</span><span class="pizza-price">500L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Spinaq, Vezë</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Ananas</span><span class="pizza-price">550L</span></div><div class="pizza-ingredients">Salcë, Mozzarella, Fileto Pule, Djath i bardhë, Ananas</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Bianca</span><span class="pizza-price">250L</span></div><div class="pizza-ingredients">Mozzarella, Djath i bardhë</div></div>
+      </div>
+    </div>
+
+    <!-- SANDWICHES -->
+    <div class="menu-section" id="tab-sandwic">
+      <div class="pizza-grid">
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Normal</span><span class="pizza-price">200L</span></div><div class="pizza-ingredients">Sallam, Mozzarella, Majonezë, Speca, Ullinj, Domate</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Vegjitarian</span><span class="pizza-price">200L</span></div><div class="pizza-ingredients">Kërpudha, Mozzarella, Majonezë, Speca, Ullinj, Domate</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Pikant</span><span class="pizza-price">230L</span></div><div class="pizza-ingredients">Suxhuk, Mozzarella, Majonezë, Speca, Ullinj, Domate</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">4 Djathrat</span><span class="pizza-price">200L</span></div><div class="pizza-ingredients">Mozzarella, Gouda, Grana, Gorgonzola, Majonezë</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Proshutë Kërpudhë</span><span class="pizza-price">250L</span></div><div class="pizza-ingredients">Proshutë, Kërpudhë, Majonezë, Speca, Ullinj, Domate</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Proshutë</span><span class="pizza-price">230L</span></div><div class="pizza-ingredients">Proshutë, Majonezë, Speca, Ullinj, Domate</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Ton</span><span class="pizza-price">250L</span></div><div class="pizza-ingredients">Ton, Mozzarella, Majonezë, Speca, Ullinj, Domate</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">La Crema</span><span class="pizza-price">300L</span></div><div class="pizza-ingredients">Proshutë, Suxhuk, Kërpudhë, Majonezë, Pana, Mozzarella</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Fruta Deti</span><span class="pizza-price">350L</span></div><div class="pizza-ingredients">Mozzarella, Kallamar, Karkalec, Majonezë, Pomodorini</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">MIX</span><span class="pizza-price">300L</span></div><div class="pizza-ingredients">Sallam, Proshutë, Suxhuk, Kërpudhë, Mozzarella, Speca, Ullinj, Majonezë, Domate</div></div>
+      </div>
+    </div>
+
+    <!-- SALATA -->
+    <div class="menu-section" id="tab-salata">
+      <div class="pizza-grid">
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name" style="color:var(--gold);">Sallatë Fshati</span></div>
+          <div class="pizza-ingredients">Sallatë, Domate, Ullinj, Kastravec, Djathë i bardhë, Qepë e kuqe (e marinuar)</div>
+          <div class="pizza-sizes"><span class="size-badge">S 300L</span><span class="size-badge">M 500L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name" style="color:var(--gold);">Sallatë Çezar</span></div>
+          <div class="pizza-ingredients">Sallatë Iceberg, Domate, Kastravec, Copa pule, Bukë e thekur, Salcë Çezar</div>
+          <div class="pizza-sizes"><span class="size-badge">S 350L</span><span class="size-badge">M 550L</span></div>
+        </div>
+        <div class="pizza-card">
+          <div class="pizza-card-header"><span class="pizza-name" style="color:var(--gold);">Sallatë Rukola</span></div>
+          <div class="pizza-ingredients">Rukola, Pomodorini, Grana, Acceto balsamike</div>
+          <div class="pizza-sizes"><span class="size-badge">S 350L</span><span class="size-badge">M 550L</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KREPE -->
+    <div class="menu-section" id="tab-krepe">
+      <div class="pizza-grid">
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Çokollatë</span><span class="pizza-price">150L</span></div><div class="pizza-ingredients">E bardhë / E zezë</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Pistak</span><span class="pizza-price">200L</span></div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Nutella</span><span class="pizza-price">200L</span></div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Lidia Çokollatë</span><span class="pizza-price">200L</span></div><div class="pizza-ingredients">Çokollatë, Biskotë, Banane</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Lidia Pistak</span><span class="pizza-price">250L</span></div><div class="pizza-ingredients">Pistak, Biskotë, Banane</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Lidia Nutella</span><span class="pizza-price">250L</span></div><div class="pizza-ingredients">Nutella, Biskotë, Banane</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Lyleshtrydhe</span><span class="pizza-price">300L</span></div><div class="pizza-ingredients">Çokollatë, Biskotë, Lyleshtrydhe</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Ananas</span><span class="pizza-price">300L</span></div><div class="pizza-ingredients">Çokollatë e bardhë, Arrë Kokosi, Ananas</div></div>
+        <div class="pizza-card"><div class="pizza-card-header"><span class="pizza-name">Fruta të Thata</span><span class="pizza-price">300L</span></div><div class="pizza-ingredients">Çokollatë, Biskotë, Fruta të Thata</div></div>
+        <div class="pizza-card" style="border-color:var(--gold)"><div class="pizza-card-header"><span class="pizza-name" style="color:var(--gold);">Chef's Special</span><span class="pizza-price">400L</span></div><div class="pizza-ingredients">Nutella, Pistak, Fruta të Thata, Lyleshtrydhe, Ananas, Banane</div></div>
+      </div>
+    </div>
+
+    <!-- DRINKS -->
+    <div class="menu-section" id="tab-drinks">
+      <div class="drinks-grid">
+        <div class="drink-card"><div class="drink-name">Fanta Jeshile</div><div class="drink-price">150L</div></div>
+        <div class="drink-card"><div class="drink-name">Fanta Portokall</div><div class="drink-price">150L</div></div>
+        <div class="drink-card"><div class="drink-name">Sprite</div><div class="drink-price">150L</div></div>
+        <div class="drink-card"><div class="drink-name">Lemon Soda</div><div class="drink-price">150L</div></div>
+        <div class="drink-card"><div class="drink-name">Red Bull</div><div class="drink-price">250L</div></div>
+        <div class="drink-card"><div class="drink-name">BC Energy</div><div class="drink-price">170L</div></div>
+        <div class="drink-card"><div class="drink-name">Coca Cola</div><div class="drink-price">150L</div></div>
+        <div class="drink-card"><div class="drink-name">Oran Soda</div><div class="drink-price">150L</div></div>
+        <div class="drink-card"><div class="drink-name">Bavaria</div><div class="drink-price">170L</div></div>
+        <div class="drink-card"><div class="drink-name">Lipton Pjeshkë</div><div class="drink-price">150L</div></div>
+        <div class="drink-card"><div class="drink-name">Lipton Limon</div><div class="drink-price">150L</div></div>
+        <div class="drink-card"><div class="drink-name">Ujë Lufra</div><div class="drink-price">80L</div></div>
+        <div class="drink-card"><div class="drink-name">Bravo Luleshtrydhe</div><div class="drink-price">150L</div></div>
+        <div class="drink-card"><div class="drink-name">Bravo Rrush i kuq</div><div class="drink-price">150L</div></div>
+        <div class="drink-card"><div class="drink-name">Bravo Mollë jeshile</div><div class="drink-price">150L</div></div>
+        <div class="drink-card"><div class="drink-name">Bravo Pjeshkë</div><div class="drink-price">150L</div></div>
+        <div class="drink-card"><div class="drink-name">Ujë Glina</div><div class="drink-price">80L</div></div>
+        <div class="drink-card"><div class="drink-name">Ujë Capri</div><div class="drink-price">80L</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section id="info" style="background: var(--black);">
+  <div class="container">
+    <div style="text-align:center;">
+      <div class="section-label">Informacion</div>
+      <h2 class="section-title">Na <em>gjeni</em> këtu</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-icon">📍</div>
+        <h3>Adresa</h3>
+        <p>Rruga Muhamet Gjollesha<br>Përballë Universitetit të Inxhinierisë<br>Tirana, Albania 1001</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🕐</div>
+        <h3>Orari</h3>
+        <p>E Hënë – E Diel<br><strong style="color:var(--gold);">08:00 – 24:00</strong></p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📞</div>
+        <h3>Kontakt</h3>
+        <p><a href="tel:+355685555517">+355 68 555 5517</a><br><a href="tel:+355685555516">+355 68 555 5516</a></p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🛵</div>
+        <h3>Delivery</h3>
+        <p>Dërgojmë direkt tek dera juaj<br><strong style="color:var(--gold);">50L / 100L / 150L</strong><br>varësisht nga distanca</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📸</div>
+        <h3>Instagram</h3>
+        <p><a href="https://www.instagram.com/pizzaplace.al" target="_blank" style="color:var(--gold);">@pizzaplace.al</a></p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🎵</div>
+        <h3>TikTok</h3>
+        <p><a href="#" style="color:var(--gold);">@pizza.place.tr</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT + WHATSAPP -->
+<section id="kontakt" class="contact-section">
+  <div style="text-align:center;max-width:1000px;margin:0 auto 3rem;">
+    <div class="section-label">Na kontaktoni</div>
+    <h2 class="section-title">Porosit <em>tani</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="contact-wrap">
+    <!-- Left: Info + direct WA -->
+    <div class="contact-info-block">
+      <div class="contact-info-item">
+        <div class="ci-icon">📍</div>
+        <div>
+          <div class="ci-label">Adresa</div>
+          <div class="ci-value">Rruga Muhamet Gjollesha<br>Përballë Universitetit të Inxhinierisë<br>Tirana, Albania 1001</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-icon">🕐</div>
+        <div>
+          <div class="ci-label">Orari</div>
+          <div class="ci-value">E Hënë – E Diel &nbsp;·&nbsp; <strong style="color:var(--gold);">08:00 – 24:00</strong></div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-icon">📞</div>
+        <div>
+          <div class="ci-label">Telefon</div>
+          <div class="ci-value">
+            <a href="tel:+355685555517">+355 68 555 5517</a><br>
+            <a href="tel:+355685555516">+355 68 555 5516</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-icon">🛵</div>
+        <div>
+          <div class="ci-label">Delivery</div>
+          <div class="ci-value">50L / 100L / 150L — varësisht nga distanca</div>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem;">
+        <p style="font-size:0.8rem;color:var(--muted);margin-bottom:0.75rem;">Na shkruani direkt në WhatsApp:</p>
+        <a href="https://wa.me/355685555517" target="_blank" class="wa-big-btn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.117 1.532 5.845L.057 23.633a.5.5 0 0 0 .61.61l5.788-1.475A11.952 11.952 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.659-.528-5.165-1.441l-.371-.221-3.836.977.997-3.747-.242-.385A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          Hap WhatsApp Chat
+        </a>
+        <a href="https://wa.me/355685555516" target="_blank" class="wa-big-btn" style="background:#1a9e50;margin-top:0.5rem;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.117 1.532 5.845L.057 23.633a.5.5 0 0 0 .61.61l5.788-1.475A11.952 11.952 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.659-.528-5.165-1.441l-.371-.221-3.836.977.997-3.747-.242-.385A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          Nr. 2: +355 68 555 5516
+        </a>
+      </div>
+
+      <div style="margin-top:2rem;">
+        <a href="https://maps.google.com/?q=Rruga+Muhamet+Gjollesha,+Tirana,+Albania" target="_blank" class="btn-outline" style="display:inline-block;">🗺️ Hap në Google Maps</a>
+      </div>
+    </div>
+
+    <!-- Right: Order form that sends to WA -->
+    <div class="order-form">
+      <h3>Dërgo porosinë</h3>
+      <p>Plotëso formularin dhe do të dërgohet direkt në WhatsApp tonë.</p>
+      <div class="form-group">
+        <label>Emri juaj</label>
+        <input type="text" id="wa-name" placeholder="p.sh. Andi Kola">
+      </div>
+      <div class="form-group">
+        <label>Adresa e dorëzimit</label>
+        <input type="text" id="wa-address" placeholder="Rruga, Pallati, Ap...">
+      </div>
+      <div class="form-group">
+        <label>Porosi (çfarë doni)</label>
+        <textarea id="wa-order" placeholder="p.sh. 1x Picë MIX Large, 2x Coca Cola..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Shënim shtesë (opsionale)</label>
+        <input type="text" id="wa-note" placeholder="p.sh. pa speca, etj.">
+      </div>
+      <button class="send-wa-btn" onclick="sendToWhatsApp()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.117 1.532 5.845L.057 23.633a.5.5 0 0 0 .61.61l5.788-1.475A11.952 11.952 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.659-.528-5.165-1.441l-.371-.221-3.836.977.997-3.747-.242-.385A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Dërgo Porosinë në WhatsApp
+      </button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Pizza Place</div>
+  <p style="color:var(--gold);font-size:0.8rem;margin:0.25rem 0 1rem;font-style:italic;">Halal · Tirana</p>
+  <div class="social-links">
+    <a href="https://www.instagram.com/pizzaplace.al" target="_blank">Instagram @pizzaplace.al</a>
+    <a href="tel:+355685555517">+355 68 555 5517</a>
+  </div>
+  <p>Rruga Muhamet Gjollesha · Përballë U. Inxhinierisë · Tirana</p>
+  <p style="margin-top:0.5rem;font-size:0.7rem;color:#555;">© 2025 Pizza Place. Të gjitha të drejtat e rezervuara.</p>
+</footer>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.menu-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function sendToWhatsApp() {
+  const name = document.getElementById('wa-name').value.trim();
+  const address = document.getElementById('wa-address').value.trim();
+  const order = document.getElementById('wa-order').value.trim();
+  const note = document.getElementById('wa-note').value.trim();
+
+  if (!name || !address || !order) {
+    alert('Ju lutem plotësoni: Emrin, Adresën dhe Porosinë.');
+    return;
+  }
+
+  let msg = '🍕 *POROSI E RE — Pizza Place*\n\n';
+  msg += '👤 *Emri:* ' + name + '\n';
+  msg += '📍 *Adresa:* ' + address + '\n';
+  msg += '🛒 *Porosi:* ' + order + '\n';
+  if (note) msg += '📝 *Shënim:* ' + note + '\n';
+  msg += '\n_Ju faleminderit!_';
+
+  const url = 'https://wa.me/355685555517?text=' + encodeURIComponent(msg);
+  window.open(url, '_blank');
+}
+
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.animate-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
